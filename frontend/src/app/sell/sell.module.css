@@ -8,6 +8,16 @@
     rgba(16, 32, 71, 1) 35%,
     rgba(115, 102, 234, 1) 100%
   );
+  animation: backgroundShift 8s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
 
 .innerContainer {
@@ -16,6 +26,19 @@
   justify-content: center;
   flex-direction: column;
   flex-grow: 1;
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .content {
@@ -25,15 +48,18 @@
   box-shadow: 0 0 10px #ddd;
   border-radius: 10px;
   margin: 0 auto 90px auto;
+  animation: popIn 0.5s ease-out;
 }
 
-.notConnected {
-  font-size: 40px;
-  font-weight: bold;
-  color: #d2dcc8;
-  max-width: 1500px;
-  margin: 0 auto 90px auto;
-  padding: 0 10px;
+@keyframes popIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .heading {
@@ -44,14 +70,22 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: 800;
+  animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .Form {
   margin-bottom: 30px;
-}
-
-.FormContent {
-  margin: 16px 0;
 }
 
 .Label {
@@ -62,12 +96,18 @@
   font-weight: bold;
   margin-bottom: 10px;
   color: #102047;
+  animation: fadeInUp 1.2s ease-out;
 }
 
-.Label::after {
-  content: "*";
-  color: red;
-  font-size: 16px;
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .Input {
@@ -78,17 +118,11 @@
   color: #000;
   border: 1px solid #000;
   border-radius: 9px;
+  animation: fadeInUp 1.4s ease-out;
 }
 
 .TextArea {
   height: 120px;
-}
-
-.msg {
-  color: red;
-  font-weight: 500;
-  text-align: center;
-  margin-top: 10px;
 }
 
 .btn {
@@ -102,23 +136,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.inactivebtn {
-  background-color: #888;
-  color: #aaa;
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.activebtn {
-  background-color: #102047;
-  color: #fff;
-  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .activebtn:hover {
   background-color: #a15818;
+  transform: translateY(-2px);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes spin {
