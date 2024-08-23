@@ -78,7 +78,9 @@ export default function Marketplace() {
               </div>
             </>
           ) : (
-            <div className={styles.notConnected}>Connect Your Wallet to Continue...</div>
+            <div className={styles.notConnected}>
+              Connect Your Wallet to Continue...
+            </div>
           )}
         </div>
       </div>

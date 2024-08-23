@@ -14,7 +14,7 @@ export default function CoursePage() {
   const params = useParams();
   const tokenId = params.tokenId;
   const [item, setItem] = useState();
-  const [msg, setmsg] = useState();
+  const [msg, setMsg] = useState();
   const [btnContent, setBtnContent] = useState("Buy Course");
   const { isConnected, userAddress, signer } = useContext(WalletContext);
   const router = useRouter();
@@ -27,12 +27,9 @@ export default function CoursePage() {
       signer
     );
     let tokenURI = await contract.tokenURI(tokenId);
-    console.log("Token URI:", tokenURI);
     const listedToken = await contract.getListingById(tokenId);
     tokenURI = GetIpfsUrlFromPinata(tokenURI);
-    console.log("Converted IPFS URL:", tokenURI);
     const meta = (await axios.get(tokenURI)).data;
-    console.log("Metadata:", meta);
     const item = {
       price: meta.price,
       tokenId,
@@ -43,7 +40,6 @@ export default function CoursePage() {
       description: meta.description,
       courseContent: meta.courseContent,
     };
-    console.log("Item data:", item);
     return item;
   }
 
@@ -72,13 +68,13 @@ export default function CoursePage() {
       );
       const salePrice = ethers.parseUnits(item.price, "ether").toString();
       setBtnContent("Processing...");
-      setmsg("Buying the Course...");
+      setMsg("Buying the Course...");
       let transaction = await contract.purchaseNFT(tokenId, {
         value: salePrice,
       });
       await transaction.wait();
       alert("You successfully bought the Course!");
-      setmsg("");
+      setMsg("");
       setBtnContent("Buy Course");
       router.push("/");
     } catch (e) {
@@ -89,7 +85,6 @@ export default function CoursePage() {
   function isVideoFile(url) {
     const videoExtensions = ["mp4", "webm", "ogg"];
     const extension = url.split(".").pop().toLowerCase();
-    console.log("File Extension Detected:", extension);
     return videoExtensions.includes(extension);
   }
 
@@ -105,6 +100,7 @@ export default function CoursePage() {
                 alt={item?.name}
                 width={800}
                 height={520}
+                className={styles.image}
               />
               <div className={styles.details}>
                 <div className={styles.stats}>
@@ -147,21 +143,21 @@ export default function CoursePage() {
                     controls
                     width="100%"
                     src={GetIpfsUrlFromPinata(item?.courseContent)}
+                    className={styles.video}
                   >
                     Your browser does not support the video tag.
                   </video>
                 ) : (
-                  // Use an iframe to display the URL as an embedded webpage
                   <iframe
                     src={GetIpfsUrlFromPinata(item?.courseContent)}
                     width="100%"
                     height="500"
+                    className={styles.iframe}
                     allowFullScreen
                   >
                     Your browser does not support iframes.
                   </iframe>
                 )}
-                // need to figure out how to center this text below the video
                 <a
                   href={GetIpfsUrlFromPinata(item?.courseContent)}
                   target="_blank"

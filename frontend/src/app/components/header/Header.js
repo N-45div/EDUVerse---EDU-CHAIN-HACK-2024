@@ -3,7 +3,7 @@ import { WalletContext } from "@/context/wallet";
 import { BrowserProvider } from "ethers";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styles from "./Header.module.css";
 
 export default function Header() {
@@ -15,6 +15,7 @@ export default function Header() {
     signer,
     setSigner,
   } = useContext(WalletContext);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const connectWallet = async () => {
     if (!window.ethereum) {
@@ -46,10 +47,10 @@ export default function Header() {
       <div className={styles.container}>
         <div className={styles.logo}>
           <Link href="/">
-            <Image src="/logo.png" width={280} height={44} alt="logo" />
+            <Image src="/logo.png" width={200} height={44} alt="EduVerse Logo" />
           </Link>
         </div>
-        <nav className={styles.nav}>
+        <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>
           <ul className={styles.navLinks}>
             <li>
               <Link href="/marketplace" className={styles.link}>
@@ -76,10 +77,15 @@ export default function Header() {
             {isConnected ? (
               <>{userAddress?.slice(0, 8)}...</>
             ) : (
-              "Connect wallet"
+              "Connect Wallet"
             )}
           </button>
         </nav>
+        <div className={styles.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
+          <span className={styles.bar}></span>
+          <span className={styles.bar}></span>
+          <span className={styles.bar}></span>
+        </div>
       </div>
     </header>
   );

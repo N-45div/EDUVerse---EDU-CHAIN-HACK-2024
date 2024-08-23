@@ -75,7 +75,7 @@ export default function Profile() {
               <div className={styles.stats}>
                 <div className={styles.stat}>
                   <span className={styles.label}>Number of Courses:</span>
-                  <span className={styles.value}>{items?.length}</span>
+                  <span className={styles.value}>{items?.length || 0}</span>
                 </div>
                 <div className={styles.stat}>
                   <span className={styles.label}>Total Value:</span>
@@ -86,19 +86,19 @@ export default function Profile() {
                 <h2 className={styles.heading}>Your Courses</h2>
                 {items?.length > 0 ? (
                   <div className={styles.nftGrid}>
-                    {items?.map((value, index) => (
+                    {items.map((value, index) => (
                       <NFTTile item={value} key={index} />
                     ))}
                   </div>
                 ) : (
-                  <div className={styles.noNFT}>
-                    You don't have any Courses...
-                  </div>
+                  <div className={styles.noNFT}>You don't have any Courses...</div>
                 )}
               </div>
             </>
           ) : (
-            <div className={styles.notConnected}>Connect Your Wallet to Continue...</div>
+            <div className={styles.notConnected}>
+              Connect Your Wallet to Continue...
+            </div>
           )}
         </div>
       </div>

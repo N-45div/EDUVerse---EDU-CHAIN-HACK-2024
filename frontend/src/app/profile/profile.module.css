@@ -1,98 +1,114 @@
+/* General Container */
 .container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  background: linear-gradient(
-    90deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(16, 32, 71, 1) 35%,
-    rgba(115, 102, 234, 1) 100%
-  );
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  font-family: "Inter", sans-serif;
+  color: #333;
 }
 
+/* Inner Container */
 .innerContainer {
   display: flex;
-  align-content: center;
-  justify-content: center;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.content {
-  max-width: 1500px;
-  margin: 0 auto 90px auto;
-  max-height: 700px;
-  overflow-y: scroll;
-  padding: 0 10px;
-}
-
-.userInfo {
-  margin: 20px 0;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Content Box */
+.content {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 800px;
+  padding: 40px 30px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* User Info */
+.userInfo {
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 .userInfo .label {
-  font-size: 26px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #eee;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #555;
 }
 
 .address {
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #777;
+  word-break: break-all;
 }
 
+/* Stats Section */
 .stats {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  margin-bottom: 30px;
 }
 
 .stat .label {
-  font-size: 24px;
-  font-weight: bold;
-  margin-right: 10px;
-  color: #eee;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555;
 }
 
 .value {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
 }
 
+/* Heading */
 .heading {
-  font-size: 38px;
+  font-size: 1.5rem;
   text-align: center;
-  color: #fff;
-  margin: 16px 0 20px 0;
+  color: #333;
+  margin-bottom: 20px;
 }
 
+/* NFT Section */
 .nftSection {
   margin-top: 20px;
 }
 
 .nftGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   grid-gap: 20px;
 }
 
 .noNFT {
-  font-size: 28px;
-  font-weight: bold;
-  color: red;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #d9534f;
   text-align: center;
-  margin: 16px 0;
+  margin-top: 20px;
 }
 
+/* Not Connected State */
 .notConnected {
-  font-size: 40px;
-  font-weight: bold;
-  color: #d2dcc8;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #555;
   text-align: center;
-  margin: 16px 0;
+  margin-top: 30px;
 }

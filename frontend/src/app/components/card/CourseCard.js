@@ -1,8 +1,7 @@
 import GetIpfsUrlFromPinata from "@/app/utils";
 import Image from "next/image";
-
-import styles from "./CourseCard.module.css";
 import Link from "next/link";
+import styles from "./CourseCard.module.css";
 
 export default function CourseCard({ item }) {
   const IPFSUrl = GetIpfsUrlFromPinata(item.image);
@@ -13,14 +12,20 @@ export default function CourseCard({ item }) {
       : item.description;
 
   return (
-    <div className={styles.tile}>
+    <div className={styles.card}>
       <div className={styles.imageContainer}>
-        <Image src={IPFSUrl} alt="" width={500} height={360} />
+        <Image
+          src={IPFSUrl}
+          alt={item.name}
+          width={500}
+          height={360}
+          className={styles.image}
+        />
       </div>
-      <div className={styles.overlay}>
-        <Link href={`/course/${item.tokenId}`} className={styles.text}>
-          <strong>{item.name}</strong>
-          <p>{limitedDescription}</p>
+      <div className={styles.content}>
+        <Link href={`/course/${item.tokenId}`}>
+          <h3 className={styles.title}>{item.name}</h3>
+          <p className={styles.description}>{limitedDescription}</p>
         </Link>
       </div>
     </div>

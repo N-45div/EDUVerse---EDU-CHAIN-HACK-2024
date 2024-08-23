@@ -1,6 +1,10 @@
+"use client"
 import Image from "next/image";
-import Header from "./components/header/Header";
+import Header from "./components/header/Header.js";
 import styles from "./page.module.css";
+import 'animate.css';
+import animationData from "../../assets/Animation - 1724397007104.json"
+import Lottie from "lottie-react";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -8,30 +12,22 @@ export default function HomePage() {
     <div className={styles.container}>
       <Header />
       <div className={styles.hero}>
-        <div>
-          <h1 className={styles.heading}>EduVerse-</h1>
-          <h2 className={styles.heading2}>
-            Where Education Meets Blockchain Innovation
-          </h2>
-          <p className={styles.description}>
-            Dive into EduVerse, the tokenized course marketplace that’s
-            transforming education with the Open Campus blockchain. Discover a
-            secure, transparent, and decentralized learning adventure—what will
-            you unlock next?
-          </p>
-          <div className={styles.btns}>
-            <Link
-              href="/marketplace"
-              className={`${styles.btn} ${styles.buyBtn}`}
-            >
-              Browse Courses
-            </Link>
-            <Link href="/sell" className={styles.btn}>
-              List Your Course
-            </Link>
-          </div>
+        <h1 className={styles.heading}>EDUVerse</h1>
+        <p className={styles.description}>
+          Where Education Meets Blockchain Innovation. Dive into EduVerse, the
+          tokenized course marketplace transforming education with the Open
+          Campus blockchain. Discover a secure, transparent, and decentralized
+          learning adventure—what will you unlock next?
+        </p>
+        <div className={styles.btns}>
+          <Link href="/marketplace" className={styles.btn}>
+            Browse Courses
+          </Link>
+          <Link href="/sell" className={styles.btn}>
+            List Your Course
+          </Link>
         </div>
-        <Image src="/home.png" alt="home" width={800} height={800} />
+        <Lottie animationData={animationData} loop={true} />
       </div>
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
