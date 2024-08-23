@@ -27,11 +27,12 @@ export default function CoursePage() {
       signer
     );
     let tokenURI = await contract.tokenURI(tokenId);
-    console.log(tokenURI);
+    console.log("Token URI:", tokenURI);
     const listedToken = await contract.getListingById(tokenId);
     tokenURI = GetIpfsUrlFromPinata(tokenURI);
-    console.log(tokenURI);
+    console.log("Converted IPFS URL:", tokenURI);
     const meta = (await axios.get(tokenURI)).data;
+    console.log("Metadata:", meta);
     const item = {
       price: meta.price,
       tokenId,
@@ -40,8 +41,9 @@ export default function CoursePage() {
       image: meta.image,
       name: meta.name,
       description: meta.description,
-      courseContent: meta.courseContent, 
+      courseContent: meta.courseContent,
     };
+    console.log("Item data:", item);
     return item;
   }
 
@@ -84,6 +86,13 @@ export default function CoursePage() {
     }
   }
 
+  function isVideoFile(url) {
+    const videoExtensions = ["mp4", "webm", "ogg"];
+    const extension = url.split(".").pop().toLowerCase();
+    console.log("File Extension Detected:", extension);
+    return videoExtensions.includes(extension);
+  }
+
   return (
     <div className={styles.container}>
       <Header />
@@ -91,7 +100,12 @@ export default function CoursePage() {
         {isConnected ? (
           <div className={styles.content}>
             <div className={styles.nftGrid}>
-              <Image src={item?.image} alt="" width={800} height={520} />
+              <Image
+                src={item?.image}
+                alt={item?.name}
+                width={800}
+                height={520}
+              />
               <div className={styles.details}>
                 <div className={styles.stats}>
                   <div className={styles.stat}>
@@ -114,16 +128,9 @@ export default function CoursePage() {
                 <div className={styles.ctaBtn}>
                   <div className={styles.msg}>{msg}</div>
                   {userAddress.toLowerCase() === item?.creator.toLowerCase() ? (
-                    <div className={styles.msgAlert}>
-                      You own this course!
-                    </div>
+                    <div className={styles.msgAlert}>*You own this course*</div>
                   ) : (
-                    <button
-                      onClick={() => {
-                        buyCourse();
-                      }}
-                      className={styles.Btn}
-                    >
+                    <button onClick={buyCourse} className={styles.Btn}>
                       {btnContent === "Processing..." && (
                         <span className={styles.spinner} />
                       )}
@@ -131,30 +138,45 @@ export default function CoursePage() {
                     </button>
                   )}
                 </div>
-                {userAddress.toLowerCase() ===
-                  item?.currentOwner.toLowerCase() && (
-                  <div className={styles.download}>
-                    {/* <iframe
-                      src={GetIpfsUrlFromPinata(item?.courseContent)}
-                      width="100%"
-                      height="600px"
-                      title="Course Content"
-                    ></iframe> */}
-                    <a
-                      href={GetIpfsUrlFromPinata(item?.courseContent)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.downloadLink}
-                    >
-                      Click to Download Course Content
-                    </a>
-                  </div>
-                )}
               </div>
             </div>
+            {userAddress.toLowerCase() === item?.currentOwner.toLowerCase() && (
+              <div className={styles.courseContent}>
+                {isVideoFile(GetIpfsUrlFromPinata(item?.courseContent)) ? (
+                  <video
+                    controls
+                    width="100%"
+                    src={GetIpfsUrlFromPinata(item?.courseContent)}
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  // Use an iframe to display the URL as an embedded webpage
+                  <iframe
+                    src={GetIpfsUrlFromPinata(item?.courseContent)}
+                    width="100%"
+                    height="500"
+                    allowFullScreen
+                  >
+                    Your browser does not support iframes.
+                  </iframe>
+                )}
+                // need to figure out how to center this text below the video
+                <a
+                  href={GetIpfsUrlFromPinata(item?.courseContent)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.download}
+                >
+                  Click to Download Course Content
+                </a>
+              </div>
+            )}
           </div>
         ) : (
-          <div className={styles.notConnected}>Connect Your Wallet to Continue...</div>
+          <div className={styles.notConnected}>
+            Connect Your Wallet to Continue...
+          </div>
         )}
       </div>
     </div>

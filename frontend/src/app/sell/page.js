@@ -151,7 +151,9 @@ export default function SellCourse() {
                 />
               </div>
               <div className={styles.FormContent}>
-                <label className={styles.Label}>Upload course content (pdf recommended)</label>
+                <label className={styles.Label}>
+                  Upload course content (pdf or video)
+                </label>
                 <input
                   type="file"
                   className={styles.Input}

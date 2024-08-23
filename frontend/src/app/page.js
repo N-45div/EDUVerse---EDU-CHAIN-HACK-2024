@@ -9,10 +9,10 @@ export default function HomePage() {
       <Header />
       <div className={styles.hero}>
         <div>
-          <h1 className={styles.heading}>
-            EduVerse-
-          </h1>
-          <h2 className={styles.heading2}>Where Education Meets Blockchain Innovation</h2>
+          <h1 className={styles.heading}>EduVerse-</h1>
+          <h2 className={styles.heading2}>
+            Where Education Meets Blockchain Innovation
+          </h2>
           <p className={styles.description}>
             Dive into EduVerse, the tokenized course marketplace that’s
             transforming education with the Open Campus blockchain. Discover a
@@ -31,7 +31,7 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
-        <Image src="/home.png" alt="home" width={1075} height={650} />
+        <Image src="/home.png" alt="home" width={800} height={800} />
       </div>
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
