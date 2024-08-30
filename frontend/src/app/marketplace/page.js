@@ -7,10 +7,13 @@ import styles from "./marketplace.module.css";
 import Header from "../components/header/Header";
 import axios from "axios";
 import CourseCard from "../components/card/CourseCard";
+import { useOCAuth } from "@opencampus/ocid-connect-js";
+import Login from "../components/login/page";
 
 export default function Marketplace() {
   const [items, setItems] = useState();
   const { isConnected, signer } = useContext(WalletContext);
+  const { authState } = useOCAuth();
 
   async function getNFTitems() {
     const itemsArray = [];
@@ -58,14 +61,16 @@ export default function Marketplace() {
   }, [isConnected]);
 
   return (
-    <div className={styles.container}>
-      <Header />
-      <div className={styles.innerContainer}>
-        <div className={styles.content}>
-          {isConnected ? (
-            <>
+    <div>
+      {!authState || !authState.isAuthenticated || !isConnected ? (
+        <Login />
+      ) : (
+        <div className={styles.container}>
+          <Header />
+          <div className={styles.innerContainer}>
+            <div className={styles.content}>
               <div className={styles.nftSection}>
-                <h2 className={styles.heading}>Course Marketplace</h2>
+                <h2 className={styles.heading}> Browse listings</h2>
                 {items?.length > 0 ? (
                   <div className={styles.nftGrid}>
                     {items?.map((value, index) => (
@@ -76,12 +81,10 @@ export default function Marketplace() {
                   <div className={styles.noNFT}>No Courses Listed...</div>
                 )}
               </div>
-            </>
-          ) : (
-            <div className={styles.notConnected}>Connect Your Wallet to Continue...</div>
-          )}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

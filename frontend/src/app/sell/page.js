@@ -4,9 +4,11 @@ import styles from "./sell.module.css";
 import Header from "../components/header/Header";
 import { useRouter } from "next/navigation";
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
-import marketplace from "./../marketplace.json";
+import marketplace from "../marketplace.json";
 import { ethers } from "ethers";
 import { WalletContext } from "@/context/wallet";
+import { useOCAuth } from "@opencampus/ocid-connect-js";
+import Login from "../components/login/page";
 
 export default function SellCourse() {
   const [formParams, updateFormParams] = useState({
@@ -18,9 +20,10 @@ export default function SellCourse() {
   const [courseContentURL, setCourseContentURL] = useState();
   const [message, updateMessage] = useState("");
   const [btn, setBtn] = useState(false);
-  const [btnContent, setBtnContent] = useState("List Course");
+  const [btnContent, setBtnContent] = useState("Upload listing");
   const router = useRouter();
   const { isConnected, signer } = useContext(WalletContext);
+  const { authState } = useOCAuth();
 
   async function onFileChange(e, type) {
     try {
@@ -87,11 +90,11 @@ export default function SellCourse() {
       let transaction = await contract.mintToken(metadataURL, price);
       await transaction.wait();
 
-      setBtnContent("List Course");
+      setBtnContent("List");
       setBtn(false);
       updateMessage("");
       updateFormParams({ name: "", description: "", price: "" });
-      alert("Successfully listed your Course!");
+      alert("Successfully listed!");
       router.push("/");
     } catch (e) {
       alert("Upload error", e);
@@ -99,90 +102,89 @@ export default function SellCourse() {
   }
 
   return (
-    <div className={styles.container}>
-      <Header />
-      {isConnected ? (
-        <div className={styles.innerContainer}>
-          <div className={styles.content}>
-            <h2 className={styles.heading}>Upload your Course</h2>
-            <div className={styles.Form}>
-              <div className={styles.FormContent}>
-                <label className={styles.Label}>Course name</label>
-                <input
-                  type="text"
-                  className={styles.Input}
-                  value={formParams.name}
-                  onChange={(e) =>
-                    updateFormParams({ ...formParams, name: e.target.value })
-                  }
-                />
-              </div>
-              <div className={styles.FormContent}>
-                <label className={styles.Label}>Course description</label>
-                <textarea
-                  type="text"
-                  className={`${styles.Input} ${styles.TextArea}`}
-                  value={formParams.description}
-                  onChange={(e) =>
-                    updateFormParams({
-                      ...formParams,
-                      description: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className={styles.FormContent}>
-                <label className={styles.Label}>Price (in EDU)</label>
-                <input
-                  type="number"
-                  className={styles.Input}
-                  value={formParams.price}
-                  onChange={(e) =>
-                    updateFormParams({ ...formParams, price: e.target.value })
-                  }
-                />
-              </div>
-              <div className={styles.FormContent}>
-                <label className={styles.Label}>Upload course image</label>
-                <input
-                  type="file"
-                  className={styles.Input}
-                  onChange={(e) => onFileChange(e, "image")}
-                />
-              </div>
-              <div className={styles.FormContent}>
-                <label className={styles.Label}>
-                  Upload course content (pdf or video)
-                </label>
-                <input
-                  type="file"
-                  className={styles.Input}
-                  onChange={(e) => onFileChange(e, "course content")}
-                />
-              </div>
-              <br></br>
-              <div className={styles.msg}>{message}</div>
-              <button
-                onClick={listNFT}
-                type="submit"
-                className={
-                  btn
-                    ? `${styles.btn} ${styles.activebtn}`
-                    : `${styles.btn} ${styles.inactivebtn}`
-                }
-              >
-                {btnContent === "Processing..." && (
-                  <span className={styles.spinner} />
-                )}
-                {btnContent}
-              </button>
-            </div>
-          </div>
-        </div>
+    <div>
+      {!authState || !authState.isAuthenticated || !isConnected ? (
+        <Login />
       ) : (
-        <div className={styles.innerContainer}>
-          <div className={styles.notConnected}>
-            Connect Your Wallet to Continue...
+        <div className={styles.container}>
+          <Header />
+
+          <div className={styles.innerContainer}>
+            <div className={styles.content}>
+              <h2 className={styles.heading}>Upload your Content or Course</h2>
+              <div className={styles.Form}>
+                <div className={styles.FormContent}>
+                  <label className={styles.Label}>Name your listing</label>
+                  <input
+                    type="text"
+                    className={styles.Input}
+                    value={formParams.name}
+                    onChange={(e) =>
+                      updateFormParams({ ...formParams, name: e.target.value })
+                    }
+                  />
+                </div>
+                <div className={styles.FormContent}>
+                  <label className={styles.Label}>Short Description</label>
+                  <textarea
+                    type="text"
+                    className={`${styles.Input} ${styles.TextArea}`}
+                    value={formParams.description}
+                    onChange={(e) =>
+                      updateFormParams({
+                        ...formParams,
+                        description: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className={styles.FormContent}>
+                  <label className={styles.Label}>Mint Price (in EDU)</label>
+                  <input
+                    type="number"
+                    className={styles.Input}
+                    value={formParams.price}
+                    onChange={(e) =>
+                      updateFormParams({ ...formParams, price: e.target.value })
+                    }
+                  />
+                </div>
+                <div className={styles.FormContent}>
+                  <label className={styles.Label}>Upload preview image</label>
+                  <input
+                    type="file"
+                    className={styles.Input}
+                    onChange={(e) => onFileChange(e, "image")}
+                  />
+                </div>
+                <div className={styles.FormContent}>
+                  <label className={styles.Label}>
+                    Upload full content (pdf or video)
+                  </label>
+                  <input
+                    type="file"
+                    className={styles.Input}
+                    onChange={(e) => onFileChange(e, "course content")}
+                  />
+                </div>
+                <br></br>
+                <div className={styles.msg}>{message}</div>
+                <button
+                  onClick={listNFT}
+                  type="submit"
+                  className={
+                    btn
+                      ? `${styles.btn} ${styles.activebtn}`
+                      : `${styles.btn} ${styles.inactivebtn}`
+                  }
+                >
+                  {btnContent === "Processing..." && (
+                    <span className={styles.spinner} />
+                  )}
+                  {btnContent}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

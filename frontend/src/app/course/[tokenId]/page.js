@@ -161,7 +161,7 @@ export default function CoursePage() {
                     Your browser does not support iframes.
                   </iframe>
                 )}
-                // need to figure out how to center this text below the video
+                //////////////////////////////////////////////////////////////////////////////////////////
                 <a
                   href={GetIpfsUrlFromPinata(item?.courseContent)}
                   target="_blank"
@@ -170,6 +170,7 @@ export default function CoursePage() {
                 >
                   Click to Download Course Content
                 </a>
+                ////////////////////////////////////////////////////////////////////////////////////
               </div>
             )}
           </div>

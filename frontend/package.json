@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ariakit/react": "^0.4.10",
+    "@opencampus/ocid-connect-js": "^1.0.1",
     "axios": "^1.7.4",
     "dotenv": "^16.4.5",
     "ethers": "^6.13.2",
