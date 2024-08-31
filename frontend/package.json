@@ -10,8 +10,12 @@
   },
   "dependencies": {
     "@ariakit/react": "^0.4.10",
+<<<<<<< HEAD
     "@lottiefiles/react-lottie-player": "^3.5.4",
     "animate.css": "^4.1.1",
+=======
+    "@opencampus/ocid-connect-js": "^1.0.1",
+>>>>>>> 809371df806d2d7586a2dd0ae691ce6e7b9fd613
     "axios": "^1.7.4",
     "dotenv": "^16.4.5",
     "ethers": "^6.13.2",

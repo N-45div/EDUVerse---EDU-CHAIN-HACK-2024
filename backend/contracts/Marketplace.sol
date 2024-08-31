@@ -70,7 +70,7 @@ contract Marketplace is ERC721URIStorage {
     function purchaseNFT(uint256 _tokenId) public payable {
         Listing storage listing = idToListing[_tokenId];
         uint256 price = listing.price;
-        address payable seller = listing.creator;
+        address payable creator = listing.creator;
 
         require(msg.value == price, "Incorrect payment amount");
 
@@ -81,7 +81,7 @@ contract Marketplace is ERC721URIStorage {
 
         uint256 feeAmount = (price * feePercent) / 100;
         marketplaceOwner.transfer(feeAmount);
-        seller.transfer(msg.value - feeAmount);
+        creator.transfer(msg.value - feeAmount);
     }
 
     function listAllNFTs() public view returns (Listing[] memory) {

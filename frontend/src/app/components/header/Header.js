@@ -1,46 +1,29 @@
 "use client";
+
+import { useContext, useEffect } from "react";
 import { WalletContext } from "@/context/wallet";
-import { BrowserProvider } from "ethers";
 import Image from "next/image";
 import Link from "next/link";
+<<<<<<< HEAD
 import { useContext, useState } from "react";
+=======
+import { useOCAuth } from "@opencampus/ocid-connect-js";
+>>>>>>> 809371df806d2d7586a2dd0ae691ce6e7b9fd613
 import styles from "./Header.module.css";
 
 export default function Header() {
   const {
     isConnected,
-    setIsConnected,
+
     userAddress,
-    setUserAddress,
-    signer,
-    setSigner,
   } = useContext(WalletContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const connectWallet = async () => {
-    if (!window.ethereum) {
-      throw new Error("Please install Metamask");
-    }
+  const { authState, ocAuth } = useOCAuth();
 
-    try {
-      const provider = new BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      setSigner(signer);
-      const accounts = await provider.send("eth_requestAccounts", []);
-      setIsConnected(true);
-      setUserAddress(accounts[0]);
-      const network = await provider.getNetwork();
-      const chainID = network.chainId;
-      const opencampusNetworkId = "656476";
-
-      if (chainID.toString() !== opencampusNetworkId) {
-        alert("Please switch to the Open Campus network");
-        return;
-      }
-    } catch (error) {
-      console.error("connection error: ", error);
-    }
-  };
+  useEffect(() => {
+    console.log(authState);
+  }, [authState]);
 
   return (
     <header className={styles.header}>
@@ -68,18 +51,26 @@ export default function Header() {
               </Link>
             </li>
           </ul>
-          <button
-            className={`${styles.ctaBtn} ${
-              isConnected ? styles.activebtn : styles.inactivebtn
-            }`}
-            onClick={connectWallet}
-          >
-            {isConnected ? (
-              <>{userAddress?.slice(0, 8)}...</>
+          <div className={styles.authButtons}>
+            {authState.isAuthenticated ? (
+              <button>
+                You are logged in as {ocAuth.getAuthInfo().edu_username}
+              </button>
             ) : (
               "Connect Wallet"
             )}
-          </button>
+            <button
+              className={`${styles.ctaBtn} ${
+                isConnected ? styles.activebtn : styles.inactivebtn
+              }`}
+            >
+              {isConnected ? (
+                <>{userAddress?.slice(0, 8)}...</>
+              ) : (
+                "Connect wallet"
+              )}
+            </button>
+          </div>
         </nav>
         <div className={styles.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
           <span className={styles.bar}></span>

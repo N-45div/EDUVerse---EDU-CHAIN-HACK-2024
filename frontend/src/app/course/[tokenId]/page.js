@@ -158,6 +158,10 @@ export default function CoursePage() {
                     Your browser does not support iframes.
                   </iframe>
                 )}
+<<<<<<< HEAD
+=======
+                //////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> 809371df806d2d7586a2dd0ae691ce6e7b9fd613
                 <a
                   href={GetIpfsUrlFromPinata(item?.courseContent)}
                   target="_blank"
@@ -166,6 +170,7 @@ export default function CoursePage() {
                 >
                   Click to Download Course Content
                 </a>
+                ////////////////////////////////////////////////////////////////////////////////////
               </div>
             )}
           </div>
