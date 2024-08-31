@@ -4,11 +4,8 @@ import { useContext, useEffect } from "react";
 import { WalletContext } from "@/context/wallet";
 import Image from "next/image";
 import Link from "next/link";
-<<<<<<< HEAD
-import { useContext, useState } from "react";
-=======
+import { useState } from "react";
 import { useOCAuth } from "@opencampus/ocid-connect-js";
->>>>>>> 809371df806d2d7586a2dd0ae691ce6e7b9fd613
 import styles from "./Header.module.css";
 
 export default function Header() {

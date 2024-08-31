@@ -1,9 +1,8 @@
 "use client";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import styles from "./Login.module.css";
 import { useOCAuth } from "@opencampus/ocid-connect-js";
 import LoginButton from "./LoginButton";
-import { useContext, useEffect } from "react";
 import { WalletContext } from "@/context/wallet";
 import { BrowserProvider } from "ethers";
 
@@ -21,7 +20,8 @@ export default function Login() {
 
   const connectWallet = async () => {
     if (!window.ethereum) {
-      throw new Error("Please install Metamask");
+      alert("Please install Metamask");
+      return;
     }
 
     try {
@@ -31,6 +31,7 @@ export default function Login() {
       const accounts = await provider.send("eth_requestAccounts", []);
       setIsConnected(true);
       setUserAddress(accounts[0]);
+
       const network = await provider.getNetwork();
       const chainID = network.chainId;
       const opencampusNetworkId = "656476";
@@ -40,30 +41,29 @@ export default function Login() {
         return;
       }
     } catch (error) {
-      console.error("connection error: ", error);
+      console.error("Connection error: ", error);
     }
   };
 
   useEffect(() => {
     console.log(authState);
   }, [authState]);
+
   return (
     <div className={styles.loginContainer}>
       <div className={styles.loginContent}>
         <img
-          className="logo"
+          className={styles.logo}
           src="https://i.imgur.com/htpTI68.png"
           alt="EDUVERSE"
-          width={300}
-          height={300}
         />
-        <h1 className="title">EDUVERSE🌎</h1>
-        <h2 className="subtitle">Connect your wallet to get started!</h2>
-        <div className={styles.loginContent}>
+        <h1 className={styles.title}>EDUVERSE🌎</h1>
+        <h2 className={styles.subtitle}>Connect your wallet to get started!</h2>
+        <div className={styles.authSection}>
           {authState.isAuthenticated ? (
-            <button>
-              You are logged in as {ocAuth.getAuthInfo().edu_username}
-            </button>
+            <div className={styles.userInfo}>
+              Logged in as {ocAuth.getAuthInfo().edu_username}
+            </div>
           ) : (
             <LoginButton />
           )}

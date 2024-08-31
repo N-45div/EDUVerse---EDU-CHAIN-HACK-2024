@@ -81,17 +81,8 @@ export default function Marketplace() {
                   <div className={styles.noNFT}>No Courses Listed...</div>
                 )}
               </div>
-<<<<<<< HEAD
-            </>
-          ) : (
-            <div className={styles.notConnected}>
-              Connect Your Wallet to Continue...
-            </div>
-          )}
-=======
             </div>
           </div>
->>>>>>> 809371df806d2d7586a2dd0ae691ce6e7b9fd613
         </div>
       )}
     </div>

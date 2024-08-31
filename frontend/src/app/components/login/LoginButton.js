@@ -1,69 +1,17 @@
-/*!
- * Copyright 2024-Present Animoca Brands Corporation Ltd.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-/* eslint-disable react/no-unknown-property */
-
 "use client";
 
 import { useOCAuth } from "@opencampus/ocid-connect-js";
-
 import React from "react";
 
-const lightTheme = {
-  background: "#000",
-  color: "#fff",
+const whiteTheme = {
+  background: "#ffffff",
+  color: "#000000",
   button: {
-    background: "#FFF",
-    border: "#DDDDEB",
-    color: "#C5C5D1",
-    colorSuccess: "#8F8FB2",
+    background: "#ffffff",
+    border: "#e5e5e5",
+    color: "#000000",
+    colorSuccess: "#333333",
   },
-};
-
-const darkTheme = {
-  background: "#fff",
-  color: "#000",
-  button: {
-    background: "#141414",
-    border: "#DDDDEB",
-    color: "#FFFFFF",
-    colorSuccess: "#ADADB8",
-  },
-};
-
-const neutralTheme = {
-  background: "#fff",
-  color: "#000",
-  button: {
-    background: "#F5F5F5",
-    border: "#DDDDEB",
-    color: "#141414",
-    colorSuccess: "#8F8FB2",
-  },
-};
-
-const ocBlueTheme = {
-  background: "#fff",
-  color: "#000",
-  button: {
-    background: "#141BEB",
-    border: "#DDDDEB",
-    color: "#FFFFFF",
-    colorSuccess: "#9699EB",
-  },
-};
-
-const themes = {
-  light: lightTheme,
-  dark: darkTheme,
-  neutral: neutralTheme,
-  ocBlue: ocBlueTheme,
 };
 
 const genStyle = (theme, pill = false) => ({
@@ -80,17 +28,15 @@ const genStyle = (theme, pill = false) => ({
   color: theme.button.color,
 });
 
-export default function LoginButton({ pill, disabled, theme }) {
+export default function LoginButton({ pill, disabled }) {
   const { ocAuth } = useOCAuth();
-  const customTheme = themes[theme] || themes["ocBlue"];
+  const style = genStyle(whiteTheme, pill);
 
   const loginWithRedirect = async () => {
     await ocAuth.signInWithRedirect({
       state: "opencampus",
     });
   };
-
-  const style = genStyle(customTheme, pill);
 
   return (
     <button disabled={disabled} onClick={loginWithRedirect} style={style}>

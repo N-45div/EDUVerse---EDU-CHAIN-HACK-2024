@@ -80,13 +80,8 @@ export default function Profile() {
               </div>
               <div className={styles.stats}>
                 <div className={styles.stat}>
-<<<<<<< HEAD
-                  <span className={styles.label}>Number of Courses:</span>
-                  <span className={styles.value}>{items?.length || 0}</span>
-=======
                   <span className={styles.label}>Number of Collectibles:</span>
                   <span className={styles.value}>{items?.length}</span>
->>>>>>> 809371df806d2d7586a2dd0ae691ce6e7b9fd613
                 </div>
                 <div className={styles.stat}>
                   <span className={styles.label}>Total Value:</span>
@@ -102,17 +97,6 @@ export default function Profile() {
                     ))}
                   </div>
                 ) : (
-<<<<<<< HEAD
-                  <div className={styles.noNFT}>You don't have any Courses...</div>
-                )}
-              </div>
-            </>
-          ) : (
-            <div className={styles.notConnected}>
-              Connect Your Wallet to Continue...
-            </div>
-          )}
-=======
                   <div className={styles.noNFT}>
                     You don't have any Collectibles...
                   </div>
@@ -120,7 +104,6 @@ export default function Profile() {
               </div>
             </div>
           </div>
->>>>>>> 809371df806d2d7586a2dd0ae691ce6e7b9fd613
         </div>
       )}
     </div>
